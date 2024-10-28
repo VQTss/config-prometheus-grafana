@@ -1,0 +1,29 @@
+# route:
+#   group_by: ['alertname', 'job']
+
+#   group_wait: 30s
+#   group_interval: 5m
+#   repeat_interval: 3h
+
+#   receiver: discord
+
+# receivers:
+# - name: discord
+#   discord_configs:
+#   - webhook_url: https://discord.com/api/webhooks/1131241192202444861/dlE3gpiSxAAEbMFEvZcFFv0Dv-GHga1G4xrToKYjKe-eEs87Bl6BOEFD03971yviIKXP
+
+global:
+  smtp_smarthost: 'smtp.example.com:587'  # Replace with your SMTP server and port
+  smtp_from: 'alert@example.com'          # Replace with your sender email
+  smtp_auth_username: 'username'          # Replace with your SMTP username
+  smtp_auth_password: 'password'          # Replace with your SMTP password
+  smtp_require_tls: true
+
+route:
+  receiver: 'email-notifications'
+
+receivers:
+  - name: 'email-notifications'
+    email_configs:
+      - to: 'manager@example.com'         # Replace with the manager's email
+        send_resolved: true
