@@ -13,6 +13,7 @@ services:
   node-exporter:
     image: prom/node-exporter:v1.3.1
     container_name: node-exporter
+    restart: always
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
@@ -30,7 +31,7 @@ services:
   prometheus:
     image: prom/prometheus:v2.38.0
     container_name: prometheus
-    restart: unless-stopped
+    restart: always
     volumes:
       - prometheus_data:/prometheus
       - ./prometheus/config/prometheus.yml:/etc/prometheus/prometheus.yml
@@ -50,7 +51,7 @@ services:
   alertmanager:
     image: prom/alertmanager:v0.25.0
     container_name: alertmanager
-    restart: unless-stopped
+    restart: always
     volumes:
       - alertmanager_data:/alertmanager/data
       - ./alertmanager:/alertmanager
@@ -66,7 +67,7 @@ services:
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:latest
     container_name: cadvisor
-    restart: unless-stopped
+    restart: always
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:rw
@@ -80,7 +81,7 @@ services:
   grafana:
     image: grafana/grafana:9.0.5
     container_name: grafana
-    restart: unless-stopped
+    restart: always
     volumes:
       - grafana_data:/var/lib/grafana
       - ./grafana/config/dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml:ro
@@ -101,7 +102,7 @@ services:
   nvidia-dcgm-exporter:
     image: nvidia/dcgm-exporter:latest
     container_name: nvidia-dcgm-exporter
-    restart: unless-stopped
+    restart: always
     runtime: nvidia
     environment:
       - NVIDIA_VISIBLE_DEVICES=all
@@ -115,7 +116,7 @@ services:
   jaeger:
     image: jaegertracing/all-in-one:1.47
     container_name: jaeger
-    restart: unless-stopped
+    restart: always
     ports:
       - "6831:6831/udp"
       - "16686:16686"
